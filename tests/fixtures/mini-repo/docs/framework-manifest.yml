@@ -1,0 +1,4 @@
+framework:
+  id: spine-automation-fixture
+  kind: guide
+  status: active

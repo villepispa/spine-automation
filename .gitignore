@@ -1,0 +1,20 @@
+# Local noise
+*.log
+TestResults/
+*.user
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+
+# Cursor agent / VM workspace state (product hooks are under .cursor/;
+# MyOSS exclusions also skip staging .cursor/ — keep local-only)
+.cursor/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+credentials.json
