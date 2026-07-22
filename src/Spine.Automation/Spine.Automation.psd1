@@ -1,6 +1,6 @@
 @{
     RootModule        = 'Spine.Automation.psm1'
-    ModuleVersion     = '0.1.1'
+    ModuleVersion     = '0.1.2'
     GUID              = 'a4c8e2f1-9b3d-4e7a-8c1f-2d6e9a0b5c3f'
     Author            = 'Ville Pispa'
     CompanyName       = 'Spine'

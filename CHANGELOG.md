@@ -9,16 +9,15 @@ Issue register: [docs/issues.md](docs/issues.md).
 
 ## [Unreleased]
 
-### Added
+## [0.1.2] — 2026-07-22
 
-- **`-AgentSummary` on smoke scripts** — `scripts/Invoke-SpinePs51SmokeTest.ps1` and
-  `scripts/Test-SpineProductShellGuard.ps1` accept `-AgentSummary` and emit
-  `SPINE-SMOKE-*` / `SPINE-PRODUCT-SHELLGUARD-SMOKE-*` lines for agent Shell gates.
-- **Product ShellGuard pilot (`SPA-006`)** — `.cursor/hooks/` Safety-tier gate for
-  agent `pwsh -File` (slim pack; not full config ShellGuard); smoke via
-  `scripts/Test-SpineProductShellGuard.ps1`; documented in `docs/consumption.md`.
-- **Product changelog + issue register (`SPA-005`)** — Keep a Changelog layout;
-  `docs/issues.md` with stable `SPA-` identifiers cross-linked from release notes.
+### Changed
+
+- **Probe writers: `-Json` + `-AgentSummary` together** — `Write-SpineProbeResult` /
+  `Write-SpineProbeEnvelope` accept `[switch] $Json`. Default and `-Json` alone still
+  emit JSON only; `-AgentSummary` alone still emits summary only; both emit JSON then
+  the summary line. `ConvertFrom-SpineMixedJsonOutput` falls back to object extract when
+  trailing summary makes a full-string `ConvertFrom-Json` fail.
 
 ## [0.1.1] — 2026-07-17
 
@@ -31,6 +30,14 @@ Issue register: [docs/issues.md](docs/issues.md).
 - **Dual-host CI (`SPA-004`)** — `.github/workflows/dual-host-ps.yml` (Pester
   matrix on `pwsh` + Windows PowerShell, plus PS 5.1 smoke); documented in
   `docs/consumption.md`.
+- **`-AgentSummary` on smoke scripts** — `scripts/Invoke-SpinePs51SmokeTest.ps1` and
+  `scripts/Test-SpineProductShellGuard.ps1` accept `-AgentSummary` and emit
+  `SPINE-SMOKE-*` / `SPINE-PRODUCT-SHELLGUARD-SMOKE-*` lines for agent Shell gates.
+- **Product ShellGuard pilot (`SPA-006`)** — `.cursor/hooks/` Safety-tier gate for
+  agent `pwsh -File` (slim pack; not full config ShellGuard); smoke via
+  `scripts/Test-SpineProductShellGuard.ps1`; documented in `docs/consumption.md`.
+- **Product changelog + issue register (`SPA-005`)** — Keep a Changelog layout;
+  `docs/issues.md` with stable `SPA-` identifiers cross-linked from release notes.
 
 ### Changed
 

@@ -15,6 +15,21 @@ Describe 'Spine.Probe' {
             Should -Be 'PROBE-OK exit=0'
     }
 
+    It 'Write-SpineProbeResult -Json alone emits JSON only' {
+        $out = @(Write-SpineProbeResult -Payload @{ ok = $true } -Json)
+        $out.Count | Should -Be 1
+        ($out | Out-String).Trim() | Should -Match '"ok"\s*:\s*true'
+    }
+
+    It 'Write-SpineProbeResult -Json -AgentSummary emits JSON then summary' {
+        $out = @(Write-SpineProbeResult -Payload @{ ok = $true } -Json -AgentSummary -SummaryLine 'PROBE-OK exit=0')
+        $out.Count | Should -BeGreaterThan 1
+        ($out | Out-String) | Should -Match '"ok"'
+        $out[-1] | Should -Be 'PROBE-OK exit=0'
+        $obj = ConvertFrom-SpineMixedJsonOutput -Lines ($out | ForEach-Object { "$_" })
+        $obj.ok | Should -BeTrue
+    }
+
     It 'Write-SpineProbeEnvelope emits standard probe envelope JSON' {
         $raw = Write-SpineProbeEnvelope -Data @{ hosts = @() } -ExitCode 0 -SafetyTier 1 -Summary 'ok'
         $obj = $raw | ConvertFrom-Json
@@ -31,6 +46,15 @@ Describe 'Spine.Probe' {
             Should -Be 'PROBE-FAIL exit=2'
     }
 
+    It 'Write-SpineProbeEnvelope -Json -AgentSummary mixed stdout is parseable' {
+        $out = @(Write-SpineProbeEnvelope -Data @{ x = 1 } -ExitCode 0 -Json -AgentSummary)
+        $out[-1] | Should -Be 'PROBE-OK exit=0'
+        $obj = ConvertFrom-SpineMixedJsonOutput -Lines ($out | ForEach-Object { "$_" })
+        Assert-SpineProbeEnvelope -Envelope $obj
+        $obj.data.x | Should -Be 1
+        $obj.ok | Should -BeTrue
+    }
+
     It 'Assert-SpineProbeEnvelope rejects ok/exitCode mismatch' {
         $bad = [pscustomobject]@{
             ok = $true
@@ -45,6 +69,11 @@ Describe 'Spine.Probe' {
     It 'ConvertFrom-SpineMixedJsonOutput parses leading JSON' {
         $obj = ConvertFrom-SpineMixedJsonOutput -Lines '{ "a": 1 }'
         $obj.a | Should -Be 1
+    }
+
+    It 'ConvertFrom-SpineMixedJsonOutput parses leading JSON with trailing summary' {
+        $obj = ConvertFrom-SpineMixedJsonOutput -Lines @('{ "c": 3 }', 'PROBE-OK exit=0')
+        $obj.c | Should -Be 3
     }
 
     It 'ConvertFrom-SpineMixedJsonOutput parses JSON embedded in noise' {

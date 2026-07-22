@@ -1,9 +1,15 @@
 function Write-SpineProbeResult {
     <#
     .SYNOPSIS
-        Writes probe stdout as JSON or a single AgentSummary line.
+        Writes probe stdout as JSON and/or a single AgentSummary line.
     .PARAMETER Payload
-        Object serialized when -AgentSummary is not set.
+        Object serialized when JSON is emitted (default, or with -Json).
+    .PARAMETER Json
+        Emit JSON for Payload. Combine with -AgentSummary for mixed stdout
+        (JSON then summary). Alone (or with neither switch) emits JSON only.
+    .PARAMETER AgentSummary
+        Emit SummaryLine after JSON when -Json is also set; summary only when
+        -Json is off (backward compatible).
     .PARAMETER SummaryLine
         One-line summary when -AgentSummary is set (caller builds tag/exit detail).
     #>
@@ -12,6 +18,8 @@ function Write-SpineProbeResult {
         [Parameter(Mandatory)]
         [object] $Payload,
 
+        [switch] $Json,
+
         [switch] $AgentSummary,
 
         [string] $SummaryLine,
@@ -19,14 +27,15 @@ function Write-SpineProbeResult {
         [int] $Depth = 10
     )
 
-    if ($AgentSummary) {
-        if (-not [string]::IsNullOrWhiteSpace($SummaryLine)) {
-            Write-Output $SummaryLine
-        }
-        return
-    }
+    $emitJson = $Json -or -not $AgentSummary
+    $emitSummary = $AgentSummary
 
-    $Payload | ConvertTo-Json -Depth $Depth
+    if ($emitJson) {
+        $Payload | ConvertTo-Json -Depth $Depth
+    }
+    if ($emitSummary -and -not [string]::IsNullOrWhiteSpace($SummaryLine)) {
+        Write-Output $SummaryLine
+    }
 }
 
 function New-SpineProbeEnvelope {
@@ -60,11 +69,12 @@ function New-SpineProbeEnvelope {
 function Write-SpineProbeEnvelope {
     <#
     .SYNOPSIS
-        Writes a standard probe envelope as JSON or an AgentSummary line.
+        Writes a standard probe envelope as JSON and/or an AgentSummary line.
     .DESCRIPTION
         Builds { ok, exitCode, safetyTier, summary, data } and routes through
         Write-SpineProbeResult. When -AgentSummary is set without -SummaryLine,
-        emits PROBE-OK / PROBE-FAIL exit=N from ExitCode.
+        emits PROBE-OK / PROBE-FAIL exit=N from ExitCode. -Json with
+        -AgentSummary emits envelope JSON then the summary line (mixed stdout).
     #>
     [CmdletBinding()]
     param(
@@ -77,6 +87,8 @@ function Write-SpineProbeEnvelope {
         [int] $SafetyTier = 1,
 
         [string] $Summary = '',
+
+        [switch] $Json,
 
         [switch] $AgentSummary,
 
@@ -100,7 +112,7 @@ function Write-SpineProbeEnvelope {
         }
     }
 
-    Write-SpineProbeResult -Payload $envelope -AgentSummary:$AgentSummary -SummaryLine $line -Depth $Depth
+    Write-SpineProbeResult -Payload $envelope -Json:$Json -AgentSummary:$AgentSummary -SummaryLine $line -Depth $Depth
 }
 
 function Assert-SpineProbeEnvelope {
@@ -149,8 +161,12 @@ function ConvertFrom-SpineMixedJsonOutput {
             throw 'No JSON object found in output lines.'
         }
 
-        if ($text.StartsWith('{') -or $text.StartsWith('[')) {
+        # Pure JSON succeeds; mixed stdout (JSON + trailing summary / noise) falls through.
+        try {
             return ($text | ConvertFrom-Json)
+        }
+        catch {
+            # Extract first object/array below.
         }
 
         if ($text -match '(?s)(\{.*\}|\[.*\])') {
