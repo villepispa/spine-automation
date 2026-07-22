@@ -1,6 +1,7 @@
 # Local noise
 *.log
 TestResults/
+/testResults.xml
 *.user
 
 # OS / editor
