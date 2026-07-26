@@ -14,6 +14,12 @@ module. Prefer stable `SPA-` identifiers in commits, tests, and release notes.
 
 _(None.)_
 
+## Resolved issues (2026-07-26 — v0.1.3)
+
+| ID | Summary | Evidence |
+|----|---------|----------|
+| SPA-007 | VirusTotal release URL scan workflow + README secret note | `.github/workflows/virustotal-release-scan.yml`; `README.md` |
+
 ## Resolved issues (2026-07-17 — SPA-006)
 
 | ID | Summary | Evidence |
@@ -43,6 +49,7 @@ _(None.)_
 ## Activity
 
 <!-- ISSUES-ACTIVITY+ -->
+- **2026-07-26 15:46:00** — Added `SPA-007` (VirusTotal release URL scan); shipping in `0.1.3` with empty-catch probe fix.
 - **2026-07-17 11:41:00** — Added `SPA-006` (product ShellGuard pilot hooks + smoke).
 - **2026-07-17 09:19:27** — Added `SPA-005` (changelog + issue register harmonization). Backfilled `SPA-001`–`SPA-004` into Keep a Changelog releases `0.1.0` / `0.1.1`.
 - **2026-07-17** — Verified `SPA-004` dual-host workflow dry-run (Pester both hosts + PS 5.1 smoke).

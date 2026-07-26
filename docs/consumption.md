@@ -38,10 +38,11 @@ Spine is for **shared implementation** duplicated across probes and product modu
 
 ## Version pin
 
-Tag **`v0.1.2`** matches `ModuleVersion` in `Spine.Automation.psd1` (probe writers
-accept `-Json` and `-AgentSummary` together). Config vendoring should record the tag
-in CHANGELOG when copying. **`v0.1.1`** added probe envelope helpers; **`v0.1.0`**
-was the initial spike.
+Tag **`v0.1.3`** matches `ModuleVersion` in `Spine.Automation.psd1` (empty-catch
+lint fix in mixed JSON parse; VirusTotal release URL scan workflow). Config
+vendoring should record the tag in CHANGELOG when copying. **`v0.1.2`** allowed
+probe writers `-Json` + `-AgentSummary` together; **`v0.1.1`** added probe
+envelope helpers; **`v0.1.0`** was the initial spike.
 
 ## Continuous integration (dual-host)
 

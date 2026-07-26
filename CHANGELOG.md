@@ -9,6 +9,20 @@ Issue register: [docs/issues.md](docs/issues.md).
 
 ## [Unreleased]
 
+## [0.1.3] — 2026-07-26
+
+### Fixed
+
+- **`ConvertFrom-SpineMixedJsonOutput` empty catch** — mixed-stdout JSON extract
+  and final throw now live inside `catch`, clearing
+  `PSAvoidUsingEmptyCatchBlock` without changing parse behavior.
+
+### Added
+
+- **VirusTotal release URL scan (`SPA-007`)** — `.github/workflows/virustotal-release-scan.yml`
+  on `release: published` (and manual dispatch); README notes `VIRUSTOTAL_API_KEY`
+  secret (never commit the key).
+
 ## [0.1.2] — 2026-07-22
 
 ### Changed

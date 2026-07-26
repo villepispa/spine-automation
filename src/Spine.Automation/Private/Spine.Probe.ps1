@@ -161,19 +161,17 @@ function ConvertFrom-SpineMixedJsonOutput {
             throw 'No JSON object found in output lines.'
         }
 
-        # Pure JSON succeeds; mixed stdout (JSON + trailing summary / noise) falls through.
+        # Pure JSON succeeds; mixed stdout (JSON + trailing summary / noise) recovers in catch.
         try {
             return ($text | ConvertFrom-Json)
         }
         catch {
-            # Extract first object/array below.
-        }
+            if ($text -match '(?s)(\{.*\}|\[.*\])') {
+                return ($Matches[1] | ConvertFrom-Json)
+            }
 
-        if ($text -match '(?s)(\{.*\}|\[.*\])') {
-            return ($Matches[1] | ConvertFrom-Json)
+            throw 'No JSON object found in output lines.'
         }
-
-        throw 'No JSON object found in output lines.'
     }
 }
 

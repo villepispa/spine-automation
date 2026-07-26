@@ -28,6 +28,10 @@ Pester under both `pwsh` and Windows PowerShell, plus the 5.1 smoke script.
 Dry-run and install notes: [docs/consumption.md](docs/consumption.md) § Continuous
 integration.
 
+**Release scan:** [`.github/workflows/virustotal-release-scan.yml`](.github/workflows/virustotal-release-scan.yml)
+submits release download URLs to VirusTotal on `release: published`. Set repository
+secret `VIRUSTOTAL_API_KEY` once (never commit the key).
+
 ## Consumption
 
 See [docs/consumption.md](docs/consumption.md).
