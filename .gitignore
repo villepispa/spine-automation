@@ -9,9 +9,9 @@ TestResults/
 Thumbs.db
 .idea/
 
-# Cursor agent / VM workspace state (product hooks are under .cursor/;
-# MyOSS exclusions also skip staging .cursor/ — keep local-only)
-.cursor/
+# Repo-root Cursor agent / VM state only (keep local-only).
+# Negation: templates/ps-product-shellguard/.cursor/ must remain trackable.
+/.cursor/
 
 # Secrets
 .env

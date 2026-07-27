@@ -1,0 +1,83 @@
+# Dual-host PowerShell CI — Pester on pwsh + Windows PowerShell 5.1.
+# Copy to: .github/workflows/dual-host-ps.yml
+# How-to: templates/ps-dual-host-ci/README.md
+
+name: dual-host-ps
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pester:
+    name: Pester (${{ matrix.shell }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # pwsh = PowerShell 7+; powershell = Windows PowerShell 5.1 on the runner
+        shell: [pwsh, powershell]
+    defaults:
+      run:
+        shell: ${{ matrix.shell }} {0}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure Pester 5+
+        run: |
+          $pester = Get-Module -ListAvailable -Name Pester |
+            Sort-Object Version -Descending |
+            Select-Object -First 1
+          if (-not $pester -or $pester.Version -lt [version]'5.0.0') {
+            Install-Module -Name Pester -MinimumVersion 5.0.0 -Force `
+              -SkipPublisherCheck -Scope CurrentUser
+          }
+
+      - name: Run Pester
+        run: |
+          Import-Module Pester -MinimumVersion 5.0.0
+          $cfg = New-PesterConfiguration
+          # Customize: ./tests vs ./tests/unit
+          $cfg.Run.Path = './tests'
+          $cfg.Run.Exit = $true
+          $cfg.Output.Verbosity = 'Detailed'
+          Invoke-Pester -Configuration $cfg
+
+  ps51-smoke:
+    name: PS 5.1 smoke
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assert Windows PowerShell 5.1 host
+        shell: powershell
+        run: |
+          $v = $PSVersionTable.PSVersion
+          if ($v.Major -ne 5) {
+            throw "Expected Windows PowerShell 5.x, got $v"
+          }
+          Write-Output "PS51-HOST-OK $v"
+
+      - name: Optional product smoke script
+        shell: powershell
+        run: |
+          $candidates = @(
+            './scripts/Invoke-Ps51SmokeTest.ps1',
+            './scripts/Invoke-SpinePs51SmokeTest.ps1'
+          )
+          $script = $candidates | Where-Object { Test-Path -LiteralPath $_ } |
+            Select-Object -First 1
+          if (-not $script) {
+            Write-Output 'PS51-SMOKE-SKIP no Invoke-*Ps51SmokeTest.ps1 under scripts/'
+            exit 0
+          }
+          & powershell.exe -NoProfile -File $script
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

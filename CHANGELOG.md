@@ -9,6 +9,22 @@ Issue register: [docs/issues.md](docs/issues.md).
 
 ## [Unreleased]
 
+## [0.1.4] — 2026-07-27
+
+### Added
+
+- **Consumer template packs (`SPA-008`)** — `templates/ps-dual-host-ci/` and
+  `templates/ps-product-shellguard/` (portable copies; live pilots remain under
+  `.github/workflows/` and repo-root `.cursor/hooks/`, local-only).
+- **Related links** — README and `docs/consumption.md` point at
+  [spine-cursor](https://github.com/villepispa/spine-cursor) probe plugin as the
+  contract sibling of `Write-SpineProbe*` helpers.
+
+### Fixed
+
+- **`.gitignore` scope** — ignore only `/.cursor/` so
+  `templates/ps-product-shellguard/.cursor/` remains trackable for consumers.
+
 ## [0.1.3] — 2026-07-26
 
 ### Fixed

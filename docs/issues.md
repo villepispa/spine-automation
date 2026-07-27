@@ -14,6 +14,12 @@ module. Prefer stable `SPA-` identifiers in commits, tests, and release notes.
 
 _(None.)_
 
+## Resolved issues (2026-07-27 — v0.1.4)
+
+| ID | Summary | Evidence |
+|----|---------|----------|
+| SPA-008 | Public consumer packs + sibling Related links | `templates/ps-dual-host-ci/`; `templates/ps-product-shellguard/` (incl. pack `.cursor/hooks/`); README + `docs/consumption.md` Related → spine-cursor `spine-agent-probes`; `/.cursor/` gitignore so pack hooks stay trackable |
+
 ## Resolved issues (2026-07-26 — v0.1.3)
 
 | ID | Summary | Evidence |
@@ -49,6 +55,8 @@ _(None.)_
 ## Activity
 
 <!-- ISSUES-ACTIVITY+ -->
+- **2026-07-27 11:00:00** — Resolved `SPA-008` in `v0.1.4` (consumer template packs + Related links; `/.cursor/` gitignore fix).
+- **2026-07-27 10:34:00** — Opened `SPA-008` (public templates packs + Related links to spine-cursor).
 - **2026-07-26 15:46:00** — Added `SPA-007` (VirusTotal release URL scan); shipping in `0.1.3` with empty-catch probe fix.
 - **2026-07-17 11:41:00** — Added `SPA-006` (product ShellGuard pilot hooks + smoke).
 - **2026-07-17 09:19:27** — Added `SPA-005` (changelog + issue register harmonization). Backfilled `SPA-001`–`SPA-004` into Keep a Changelog releases `0.1.0` / `0.1.1`.

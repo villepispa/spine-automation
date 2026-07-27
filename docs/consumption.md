@@ -60,9 +60,9 @@ pwsh -NoProfile -Command "Import-Module Pester -MinimumVersion 5.0.0; Invoke-Pes
 powershell.exe -NoProfile -File ./scripts/Invoke-SpinePs51SmokeTest.ps1
 ```
 
-Other dual-host product repos can copy the workflow from the Cursor config
-workspace pack `templates/ps-dual-host-ci/` (or from this file) and point Pester
-at their own `tests/` path.
+Other dual-host product repos can copy
+[`templates/ps-dual-host-ci/`](../templates/ps-dual-host-ci/) (portable
+workflow + README) and point Pester at their own `tests/` path.
 
 ## Product ShellGuard (optional project hooks)
 
@@ -85,8 +85,18 @@ pwsh -NoProfile -File ./scripts/Test-SpineProductShellGuard.ps1
 ```
 
 Expect `SPINE-PRODUCT-SHELLGUARD-SMOKE-OK`. Confirm **Settings → Hooks** lists the
-project entry after opening this folder. Other product repos can copy the same
-layout from the config workspace pack `templates/ps-product-shellguard/`.
+project entry after opening this folder. Other product repos can copy the
+portable pack from
+[`templates/ps-product-shellguard/`](../templates/ps-product-shellguard/).
+
+## Probe contract (sibling)
+
+Agents and product scripts that emit `-AgentSummary` / `-Json` envelopes should
+follow the public contract in
+[spine-cursor `spine-agent-probes`](https://github.com/villepispa/spine-cursor/tree/main/plugins/spine-agent-probes).
+This module implements that contract via `Write-SpineProbeResult`,
+`Write-SpineProbeEnvelope`, and related helpers (see FunctionsToExport in
+`Spine.Automation.psd1`).
 
 ## License
 

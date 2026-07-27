@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "preToolUse": [
+      {
+        "command": "pwsh -NoProfile -File .cursor/hooks/Invoke-ProductShellGuard.ps1",
+        "matcher": "Shell",
+        "failClosed": false
+      }
+    ]
+  }
+}
