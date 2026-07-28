@@ -9,6 +9,22 @@ Issue register: [docs/issues.md](docs/issues.md).
 
 ## [Unreleased]
 
+## [0.1.5] — 2026-07-28
+
+### Added
+
+- **Agent-ready validate trio (`SPA-009`)** — `scripts/Invoke-SpineValidate.ps1`
+  (PS 5.1 smoke → Pester → product PSA) with `-AgentSummary`;
+  `tests/Invoke-SpinePester.ps1`; `scripts/Invoke-SpineScriptAnalyzer.ps1`;
+  repo-root `PSScriptAnalyzerSettings.psd1`; README **Validate** section.
+- **`templates/ps-workspace/`** — scrubbed portable bootstrap pack (no private
+  backlog IDs); complements dual-host CI and ShellGuard packs.
+
+### Fixed
+
+- **`Write-SpineObjectArray` / `Get-SpineObjectArray`** — `process` blocks for
+  `ValueFromPipeline` (clears `PSUseProcessBlockForPipelineCommand`).
+
 ## [0.1.4] — 2026-07-27
 
 ### Added

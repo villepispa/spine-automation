@@ -58,12 +58,14 @@ function Write-SpineObjectArray {
         $InputObject
     )
 
-    $arr = @($InputObject)
-    if ($arr.Count -le 1) {
-        return ,$arr
-    }
+    process {
+        $arr = @($InputObject)
+        if ($arr.Count -le 1) {
+            return ,$arr
+        }
 
-    return $arr
+        return $arr
+    }
 }
 
 function Get-SpineObjectArray {
@@ -78,11 +80,13 @@ function Get-SpineObjectArray {
         $InputObject
     )
 
-    if ($null -eq $InputObject) {
-        return @()
-    }
+    process {
+        if ($null -eq $InputObject) {
+            return @()
+        }
 
-    return @($InputObject)
+        return @($InputObject)
+    }
 }
 
 function Get-SpineObjectPropertyValue {

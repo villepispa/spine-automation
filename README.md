@@ -13,13 +13,36 @@ Import-Module ./src/Spine.Automation/Spine.Automation.psd1 -Force
 Join-SpinePath $env:TEMP 'reports' 'baseline.json'
 ```
 
+## Validate (agents / CI discovery)
+
+Single entry: PS 5.1 smoke → Pester → product PSScriptAnalyzer.
+
+**Gallery deps** (CurrentUser; validate does not auto-install):
+
+```powershell
+Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -SkipPublisherCheck
+```
+
+```powershell
+pwsh -NoProfile -File .\scripts\Invoke-SpineValidate.ps1 -AgentSummary
+# Success line: SPINE-VALIDATE-OK
+# PSA-less host: add -SkipLint
+```
+
+Stage runners (same tokens as winget-audit-shaped products):
+
+| Stage | Script |
+|-------|--------|
+| Smoke | `scripts/Invoke-SpinePs51SmokeTest.ps1` (via `powershell.exe`) |
+| Pester | `tests/Invoke-SpinePester.ps1` |
+| Lint | `scripts/Invoke-SpineScriptAnalyzer.ps1` + `PSScriptAnalyzerSettings.psd1` |
+
 ## Tests
 
 ```powershell
-# PS 7+
+# Preferred agent entry (above), or:
 Invoke-Pester -Path ./tests/unit/
-
-# Windows PowerShell 5.1 smoke
 powershell.exe -NoProfile -File ./scripts/Invoke-SpinePs51SmokeTest.ps1
 ```
 
@@ -48,6 +71,7 @@ See [docs/consumption.md](docs/consumption.md).
 |------|------|
 | [`templates/ps-dual-host-ci/`](templates/ps-dual-host-ci/) | Dual-host Pester + PS 5.1 smoke GitHub Actions workflow |
 | [`templates/ps-product-shellguard/`](templates/ps-product-shellguard/) | Lightweight project hooks (Safety tier on `pwsh -File`) |
+| [`templates/ps-workspace/`](templates/ps-workspace/) | Minimal `scripts/` + `tests/` + PSA settings bootstrap for new PS repos |
 
 ## Design
 
@@ -60,4 +84,5 @@ commands.
 
 - Probe contract (docs + Cursor plugin): [spine-cursor `spine-agent-probes`](https://github.com/villepispa/spine-cursor/tree/main/plugins/spine-agent-probes) — implement with `Write-SpineProbeResult` / envelope helpers in this module
 - Sibling framework docs + Marketplace plugins: [spine-cursor](https://github.com/villepispa/spine-cursor)
+- Consumer product module: [driver-store-manager](https://github.com/villepispa/driver-store-manager)
 - Sample PS product validate pattern: [winget-audit](https://github.com/villepispa/winget-audit)
