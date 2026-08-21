@@ -14,6 +14,17 @@ module. Prefer stable `SPA-` identifiers in commits, tests, and release notes.
 
 _(None.)_
 
+## Resolved issues (Unreleased)
+
+_(None.)_
+
+## Resolved issues (2026-08-21 — v0.1.6)
+
+| ID | Summary | Evidence |
+|----|---------|----------|
+| SPA-011 | Optional probe `criteriaHash` / `contractId` + binding helpers | `Private/Spine.Probe.ps1`; `Get-SpineCriteriaHash`; `Test-SpineProbeCriteriaBinding`; Pester 21/21 on `Spine.Probe.Tests.ps1` |
+| SPA-010 | Product ShellGuard catalogs repo-root `tests/Invoke-*Pester.ps1` | Template Core regex; `tests/Invoke-PackPester.ps1` smoke allow; untiered runner and `tests/unit` ask; live `.cursor/hooks/` Core; `PRODUCT-SHELLGUARD-SMOKE-OK` |
+
 ## Resolved issues (2026-07-28 — v0.1.5)
 
 | ID | Summary | Evidence |
@@ -61,6 +72,8 @@ _(None.)_
 ## Activity
 
 <!-- ISSUES-ACTIVITY+ -->
+- **2026-08-21 20:45:00** — Shipped `SPA-010` and `SPA-011` in `v0.1.6` (Pester-runner catalog + criteriaHash binding; ModuleVersion 0.1.6).
+- **2026-08-20 22:10:00** — Resolved `SPA-011` (optional `criteriaHash` / `contractId`; Pester 21/21).
 - **2026-07-28 15:30:00** — Shipped `SPA-009` in `v0.1.5` (validate trio + `templates/ps-workspace/`; ModuleVersion 0.1.5).
 - **2026-07-28 14:35:00** — Resolved `SPA-009` (validate trio + `templates/ps-workspace/`; local `SPINE-VALIDATE-OK`).
 - **2026-07-27 11:00:00** — Resolved `SPA-008` in `v0.1.4` (consumer template packs + Related links; `/.cursor/` gitignore fix).

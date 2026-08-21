@@ -38,11 +38,12 @@ Spine is for **shared implementation** duplicated across probes and product modu
 
 ## Version pin
 
-Tag **`v0.1.3`** matches `ModuleVersion` in `Spine.Automation.psd1` (empty-catch
-lint fix in mixed JSON parse; VirusTotal release URL scan workflow). Config
-vendoring should record the tag in CHANGELOG when copying. **`v0.1.2`** allowed
-probe writers `-Json` + `-AgentSummary` together; **`v0.1.1`** added probe
-envelope helpers; **`v0.1.0`** was the initial spike.
+Tag **`v0.1.6`** matches `ModuleVersion` in `Spine.Automation.psd1`
+(`SPA-011` criteriaHash / contractId binding; `SPA-010` Pester-runner catalog).
+Config vendoring should record the tag in CHANGELOG when copying. **`v0.1.5`**
+added the validate trio and `ps-workspace` pack; **`v0.1.4`** consumer packs;
+**`v0.1.3`** empty-catch + VirusTotal scan; **`v0.1.2`** Json+AgentSummary
+together; **`v0.1.1`** probe envelopes; **`v0.1.0`** initial spike.
 
 ## Continuous integration (dual-host)
 
@@ -69,8 +70,9 @@ workflow + README) and point Pester at their own `tests/` path.
 User-scope Cursor hooks gate the config catalog. This repo ships a **lightweight
 project pack** under `.cursor/hooks/` that only holds agent `pwsh -NoProfile
 -File` when the target script lacks a declared Safety tier (or a matching
-`script-safety-reviews/` seal). It does **not** copy full config ShellGuard
-(file-ops allowlist, CHANGELOG roll, etc.).
+`script-safety-reviews/` seal). Catalog paths are `scripts/`, `hooks/`,
+`.cursor/hooks/`, and repo-root `tests/Invoke-*Pester.ps1`. It does **not** copy
+full config ShellGuard (file-ops allowlist, CHANGELOG roll, etc.).
 
 | Path | Role |
 |------|------|
@@ -95,8 +97,10 @@ Agents and product scripts that emit `-AgentSummary` / `-Json` envelopes should
 follow the public contract in
 [spine-cursor `spine-agent-probes`](https://github.com/villepispa/spine-cursor/tree/main/plugins/spine-agent-probes).
 This module implements that contract via `Write-SpineProbeResult`,
-`Write-SpineProbeEnvelope`, and related helpers (see FunctionsToExport in
-`Spine.Automation.psd1`).
+`Write-SpineProbeEnvelope`, `Get-SpineCriteriaHash`,
+`Test-SpineProbeCriteriaBinding`, and related helpers (see FunctionsToExport in
+`Spine.Automation.psd1`). The envelope is evidence, not an accept. Optional
+`criteriaHash` / `contractId` bind a run to done-criteria bytes.
 
 ## License
 

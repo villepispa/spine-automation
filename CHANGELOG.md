@@ -7,7 +7,36 @@ versioning aligns with [Semantic Versioning](https://semver.org/spec/v2.0.0.html
 
 Issue register: [docs/issues.md](docs/issues.md).
 
+`[Unreleased]` stages changes for the **next** SemVer cut; it does not mean
+the product is unpublished. Latest release is the first numbered section below.
+
 ## [Unreleased]
+
+_Nothing queued — latest release: **0.1.6**._
+
+## [0.1.6] — 2026-08-21
+
+### Added
+
+- **Probe envelope evidence ≠ receipt (`SPA-011`)** — optional `criteriaHash`
+  (SHA-256 hex) and `contractId` on `New-SpineProbeEnvelope` /
+  `Write-SpineProbeEnvelope`; `Get-SpineCriteriaHash` and
+  `Test-SpineProbeCriteriaBinding`. Unbound `PREFIX-OK` envelopes fail the
+  binding check. Envelope remains evidence, not an accept.
+
+- **Product ShellGuard Pester-runner catalog (`SPA-010`)** — repo-root
+  `tests/Invoke-*Pester.ps1` with a declared Safety tier is catalog (same
+  effective-tier rules as `scripts/`). Template smoke fixtures; live
+  `.cursor/hooks/` Core matches. Other `tests/` paths stay external.
+- Repo-root markdownlint (`.markdownlint.json` + `.markdownlint-cli2.jsonc`
+  ignores for `.cursor/` and drafts).
+- Call-through VS Code tasks (`.vscode/tasks.json`); default ScriptSafetyGate
+  path is `scripts/Invoke-SpineValidate.ps1`.
+
+### Fixed
+
+- **Public comment** — `scripts/Invoke-SpineValidate.ps1` help cites `SPA-009`
+  instead of a private backlog ID.
 
 ## [0.1.5] — 2026-07-28
 

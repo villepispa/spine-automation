@@ -87,4 +87,76 @@ Describe 'Spine.Probe' {
         $text = [System.IO.File]::ReadAllText($path)
         $text | Should -Match '"version"\s*:\s*"0\.1\.1"'
     }
+
+    It 'New-SpineProbeEnvelope omits criteriaHash and contractId when unset' {
+        $env = New-SpineProbeEnvelope -Data @{} -ExitCode 0
+        $env.PSObject.Properties.Name | Should -Not -Contain 'criteriaHash'
+        $env.PSObject.Properties.Name | Should -Not -Contain 'contractId'
+        Assert-SpineProbeEnvelope -Envelope $env
+    }
+
+    It 'New-SpineProbeEnvelope includes optional criteriaHash and contractId' {
+        $hash = Get-SpineCriteriaHash -Text 'done when tests pass'
+        $env = New-SpineProbeEnvelope -Data @{} -ExitCode 0 -CriteriaHash $hash -ContractId 'probe-contract'
+        $env.criteriaHash | Should -Be $hash
+        $env.contractId | Should -Be 'probe-contract'
+        Assert-SpineProbeEnvelope -Envelope $env
+    }
+
+    It 'Get-SpineCriteriaHash matches SHA-256 of UTF-8 abc' {
+        Get-SpineCriteriaHash -Text 'abc' |
+            Should -Be 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'
+    }
+
+    It 'Get-SpineCriteriaHash -LiteralPath matches -Text for the same bytes' {
+        $path = Join-Path $TestDrive 'criteria.txt'
+        $text = "gate findings=0`n"
+        [System.IO.File]::WriteAllText($path, $text, [System.Text.UTF8Encoding]::new($false))
+        (Get-SpineCriteriaHash -LiteralPath $path) | Should -Be (Get-SpineCriteriaHash -Text $text)
+    }
+
+    It 'Assert-SpineProbeEnvelope rejects malformed criteriaHash' {
+        $bad = [pscustomobject]@{
+            ok           = $true
+            exitCode     = 0
+            safetyTier   = 1
+            summary      = ''
+            data         = @{}
+            criteriaHash = 'not-a-sha256'
+        }
+        { Assert-SpineProbeEnvelope -Envelope $bad } | Should -Throw '*criteriaHash*'
+    }
+
+    It 'Test-SpineProbeCriteriaBinding is true when hash matches current criteria' {
+        $text = 'AC: Pester green; no private IDs'
+        $env = New-SpineProbeEnvelope -Data @{} -ExitCode 0 `
+            -CriteriaHash (Get-SpineCriteriaHash -Text $text) `
+            -ContractId 'oss-023'
+        Test-SpineProbeCriteriaBinding -Envelope $env -CriteriaText $text -ContractId 'oss-023' |
+            Should -BeTrue
+    }
+
+    It 'Test-SpineProbeCriteriaBinding is false when criteria were rewritten' {
+        $old = 'AC: tests pass'
+        $new = 'AC: tests pass AND docs published'
+        $env = New-SpineProbeEnvelope -Data @{ summary = 'PROBE-OK' } -ExitCode 0 `
+            -CriteriaHash (Get-SpineCriteriaHash -Text $old)
+        Test-SpineProbeCriteriaBinding -Envelope $env -CriteriaText $new | Should -BeFalse
+    }
+
+    It 'Test-SpineProbeCriteriaBinding is false for unbound PREFIX-OK envelopes' {
+        $env = New-SpineProbeEnvelope -Data @{} -ExitCode 0 -Summary 'PROBE-OK'
+        Test-SpineProbeCriteriaBinding -Envelope $env -CriteriaText 'any later criteria' |
+            Should -BeFalse
+    }
+
+    It 'Write-SpineProbeEnvelope JSON includes optional binding fields' {
+        $hash = Get-SpineCriteriaHash -Text 'bind-me'
+        $raw = Write-SpineProbeEnvelope -Data @{ n = 1 } -ExitCode 0 `
+            -CriteriaHash $hash -ContractId 'c1' -Summary 'PROBE-OK'
+        $obj = $raw | ConvertFrom-Json
+        Assert-SpineProbeEnvelope -Envelope $obj
+        $obj.criteriaHash | Should -Be $hash
+        $obj.contractId | Should -Be 'c1'
+    }
 }

@@ -25,6 +25,8 @@ Export-ModuleMember -Function @(
     'New-SpineProbeEnvelope'
     'Write-SpineProbeEnvelope'
     'Assert-SpineProbeEnvelope'
+    'Get-SpineCriteriaHash'
+    'Test-SpineProbeCriteriaBinding'
     'ConvertFrom-SpineMixedJsonOutput'
     'Write-SpineBaselineJson'
 )

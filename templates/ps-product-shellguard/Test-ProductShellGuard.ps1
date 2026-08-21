@@ -32,6 +32,9 @@ if (-not (Test-Path -LiteralPath $hook)) {
 
 $hello = Join-Path $packRoot 'scripts\Get-ProductShellGuardHello.ps1'
 $untiered = Join-Path $packRoot 'scripts\UntieredNoTier.ps1'
+$pesterRunner = Join-Path $packRoot 'tests\Invoke-PackPester.ps1'
+$untieredPester = Join-Path $packRoot 'tests\Invoke-UntieredPester.ps1'
+$unitNotRunner = Join-Path $packRoot 'tests\unit\Dummy.Tests.ps1'
 
 function Invoke-HookPayload {
     param([string]$Command)
@@ -80,6 +83,15 @@ Assert-Permission -Label 'untiered scripts/' -Raw $r3 -Expect 'ask'
 
 $r4 = Invoke-HookPayload -Command 'pwsh -NoProfile -File ./scripts/_missing_product_shellguard.ps1'
 Assert-Permission -Label 'missing path' -Raw $r4 -Expect 'ask'
+
+$r5 = Invoke-HookPayload -Command "pwsh -NoProfile -File `"$pesterRunner`""
+Assert-Permission -Label 'tiered tests/Invoke-*Pester.ps1' -Raw $r5 -Expect 'allow'
+
+$r6 = Invoke-HookPayload -Command "pwsh -NoProfile -File `"$untieredPester`""
+Assert-Permission -Label 'untiered tests/Invoke-*Pester.ps1' -Raw $r6 -Expect 'ask'
+
+$r7 = Invoke-HookPayload -Command "pwsh -NoProfile -File `"$unitNotRunner`""
+Assert-Permission -Label 'tests/unit not a Pester runner' -Raw $r7 -Expect 'ask'
 
 Write-Output 'PRODUCT-SHELLGUARD-SMOKE-OK'
 exit 0

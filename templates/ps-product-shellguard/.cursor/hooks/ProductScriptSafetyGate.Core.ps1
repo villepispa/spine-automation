@@ -77,6 +77,7 @@ function Get-ProductScriptSafetyClassification {
     if ($rel -match '(^|/)(_drafts|_archive)(/|$)') { return 'draft' }
     if ($rel -match '^(scripts|hooks)/.+\.ps1$') { return 'catalog' }
     if ($rel -match '^\.cursor/hooks/.+\.ps1$') { return 'catalog' }
+    if ($rel -match '^tests/Invoke-[^/]+Pester\.ps1$') { return 'catalog' }
     return 'external'
 }
 

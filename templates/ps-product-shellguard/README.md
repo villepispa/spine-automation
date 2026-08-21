@@ -15,6 +15,7 @@ trees stay silent unless the repo adds project hooks.
 | [`.cursor/hooks/ProductScriptSafetyGate.Core.ps1`](.cursor/hooks/ProductScriptSafetyGate.Core.ps1) | Slim Core (no Spine import) |
 | [`scripts/Get-ProductShellGuardHello.ps1`](scripts/Get-ProductShellGuardHello.ps1) | Tiered smoke fixture |
 | [`scripts/UntieredNoTier.ps1`](scripts/UntieredNoTier.ps1) | Untiered HOLD fixture |
+| [`tests/Invoke-PackPester.ps1`](tests/Invoke-PackPester.ps1) | Tiered `tests/Invoke-*Pester.ps1` allow fixture |
 | [`Test-ProductShellGuard.ps1`](Test-ProductShellGuard.ps1) | Dry-run harness |
 
 ## Design
@@ -22,7 +23,7 @@ trees stay silent unless the repo adds project hooks.
 | Concern | Behaviour |
 |---------|-----------|
 | **Repo root** | Walk up for `.cursor/hooks.json` or `.git` |
-| **Catalog paths** | `scripts/**/*.ps1`, `hooks/**/*.ps1`, `.cursor/hooks/**/*.ps1` |
+| **Catalog paths** | `scripts/**/*.ps1`, `hooks/**/*.ps1`, `.cursor/hooks/**/*.ps1`, repo-root `tests/Invoke-*Pester.ps1` |
 | **Draft** | Paths under `_drafts` / `_archive` → effective Tier 3 |
 | **External** | Other paths without a matching `script-safety-reviews/` seal → HOLD |
 | **Task profile** | Agent Shell uses `ControlledWrite` (max tier 2) |

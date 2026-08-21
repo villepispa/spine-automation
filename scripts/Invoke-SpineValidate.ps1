@@ -8,7 +8,7 @@
 
   Ordered stages: Gallery dep check → PS 5.1 smoke (via powershell.exe) →
   Pester (tests/unit) → ScriptAnalyzer. Prefer this entry for agents and
-  discovery (OSS-018). Does not Install-Module (no network); prints the
+  discovery (`SPA-009`). Does not Install-Module (no network); prints the
   Install-Module pair when Pester or PSScriptAnalyzer is missing.
 
 .PARAMETER SkipLint

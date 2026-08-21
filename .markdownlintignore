@@ -1,0 +1,4 @@
+# Pester / local noise
+**/testResults.xml
+scripts/_drafts/**
+.cursor/

@@ -1,0 +1,9 @@
+{
+  "config": {
+    "extends": ".markdownlint.json"
+  },
+  "ignores": [
+    ".cursor/**",
+    "scripts/_drafts/**"
+  ]
+}

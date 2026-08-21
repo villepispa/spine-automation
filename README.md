@@ -30,6 +30,8 @@ pwsh -NoProfile -File .\scripts\Invoke-SpineValidate.ps1 -AgentSummary
 # PSA-less host: add -SkipLint
 ```
 
+Optional Task palette (needs `CURSOR_CONFIG_ROOT`): `.vscode/tasks.json`.
+
 Stage runners (same tokens as winget-audit-shaped products):
 
 | Stage | Script |
