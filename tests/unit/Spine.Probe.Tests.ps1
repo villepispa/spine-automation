@@ -131,8 +131,8 @@ Describe 'Spine.Probe' {
         $text = 'AC: Pester green; no private IDs'
         $env = New-SpineProbeEnvelope -Data @{} -ExitCode 0 `
             -CriteriaHash (Get-SpineCriteriaHash -Text $text) `
-            -ContractId 'oss-023'
-        Test-SpineProbeCriteriaBinding -Envelope $env -CriteriaText $text -ContractId 'oss-023' |
+            -ContractId 'spa-023'
+        Test-SpineProbeCriteriaBinding -Envelope $env -CriteriaText $text -ContractId 'spa-023' |
             Should -BeTrue
     }
 
