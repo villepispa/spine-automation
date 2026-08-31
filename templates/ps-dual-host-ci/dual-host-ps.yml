@@ -28,7 +28,7 @@ jobs:
         shell: ${{ matrix.shell }} {0}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Ensure Pester 5+
         run: |
@@ -55,7 +55,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Assert Windows PowerShell 5.1 host
         shell: powershell
