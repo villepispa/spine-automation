@@ -18,6 +18,11 @@ _(None.)_
 
 _(None.)_
 
+## Resolved issues (2026-10-12 — v0.1.7)
+
+No new `SPA-` id. Shipped the assistance-log table fix, Actions
+`checkout` / `upload-artifact` `@v7`, and `ModuleVersion` `0.1.7`.
+
 ## Resolved issues (2026-08-21 — v0.1.6)
 
 | ID | Summary | Evidence |
@@ -42,6 +47,12 @@ _(None.)_
 | ID | Summary | Evidence |
 |----|---------|----------|
 | SPA-007 | VirusTotal release URL scan workflow + README secret note | `.github/workflows/virustotal-release-scan.yml`; `README.md` |
+
+## Resolved issues (2026-07-22 — v0.1.2 — SPA-012)
+
+| ID | Summary | Evidence |
+|----|---------|----------|
+| SPA-012 | Probe writers accept `-Json` and `-AgentSummary` together | `Write-SpineProbeResult`; `Write-SpineProbeEnvelope`; `ConvertFrom-SpineMixedJsonOutput`; CHANGELOG `0.1.2` |
 
 ## Resolved issues (2026-07-17 — SPA-006)
 
@@ -72,6 +83,7 @@ _(None.)_
 ## Activity
 
 <!-- ISSUES-ACTIVITY+ -->
+- **2026-10-16 15:24:00** — Recorded `v0.1.7` (assistance-log table; Actions `@v7`; ModuleVersion `0.1.7`). Backfilled `SPA-012` for the `0.1.2` probe `-Json` and `-AgentSummary` behavior.
 - **2026-08-21 20:45:00** — Shipped `SPA-010` and `SPA-011` in `v0.1.6` (Pester-runner catalog + criteriaHash binding; ModuleVersion 0.1.6).
 - **2026-08-20 22:10:00** — Resolved `SPA-011` (optional `criteriaHash` / `contractId`; Pester 21/21).
 - **2026-07-28 15:30:00** — Shipped `SPA-009` in `v0.1.5` (validate trio + `templates/ps-workspace/`; ModuleVersion 0.1.5).

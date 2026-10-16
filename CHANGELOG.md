@@ -104,7 +104,7 @@ _Nothing queued — latest release: **0.1.7**._
 
 ### Changed
 
-- **Probe writers: `-Json` + `-AgentSummary` together** — `Write-SpineProbeResult` /
+- **Probe writers: `-Json` + `-AgentSummary` together (`SPA-012`)** — `Write-SpineProbeResult` /
   `Write-SpineProbeEnvelope` accept `[switch] $Json`. Default and `-Json` alone still
   emit JSON only; `-AgentSummary` alone still emits summary only; both emit JSON then
   the summary line. `ConvertFrom-SpineMixedJsonOutput` falls back to object extract when

@@ -12,6 +12,7 @@ Thumbs.db
 # Repo-root Cursor agent / VM state only (keep local-only).
 # Negation: templates/ps-product-shellguard/.cursor/ must remain trackable.
 /.cursor/
+_archive/
 
 # Secrets
 .env
