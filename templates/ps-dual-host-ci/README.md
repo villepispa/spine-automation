@@ -37,20 +37,21 @@ into the workflow file.
 |------|--------|
 | Trigger branches | `on.push.branches` |
 | Pester path / config | `pester` job step `Run Pester` |
+| Module pin | `Ensure pinned Pester` — exact **6.1.0** (`-RequiredVersion`) on install and import. A floor-only `-MinimumVersion` can keep an older preinstalled module or float to a newer Gallery build. |
 | Skip 5.1 smoke | Remove or `if: false` the `ps51-smoke` job |
 
 ## Documented dry-run (no GitHub required)
 
 ```powershell
-pwsh -NoProfile -Command "Import-Module Pester -MinimumVersion 5.0.0; Invoke-Pester -Path ./tests -CI"
-powershell.exe -NoProfile -Command "Import-Module Pester -MinimumVersion 5.0.0; Invoke-Pester -Path ./tests -CI"
+pwsh -NoProfile -Command "Import-Module Pester -RequiredVersion 6.1.0; Invoke-Pester -Path ./tests -CI"
+powershell.exe -NoProfile -Command "Import-Module Pester -RequiredVersion 6.1.0; Invoke-Pester -Path ./tests -CI"
 powershell.exe -NoProfile -File ./scripts/Invoke-Ps51SmokeTest.ps1
 ```
 
 **This repo:**
 
 ```powershell
-pwsh -NoProfile -Command "Import-Module Pester -MinimumVersion 5.0.0; Invoke-Pester -Path ./tests/unit -CI"
+pwsh -NoProfile -Command "Import-Module Pester -RequiredVersion 6.1.0; Invoke-Pester -Path ./tests/unit -CI"
 powershell.exe -NoProfile -File ./scripts/Invoke-SpinePs51SmokeTest.ps1
 ```
 

@@ -6,7 +6,9 @@ Complements product `CHANGELOG.md` (release history) and each `.cursor/agent-log
 
 | When | Phase / scope | Deliverable | Tool / model | Purpose | Verified by |
 |------|---------------|-------------|--------------|---------|-------------|
-| <!-- AAI+ --> 2026-10-16 15:24:00 | Release register sync | docs/issues.md names v0.1.7; SPA-012 backfilled on CHANGELOG 0.1.2 | Cursor Grok 4.7 [Tier 2: grok-4.7] | Keep the issue register aligned with tag v0.1.7 | Headings for v0.1.7 and SPA-012 |
+| <!-- AAI+ --> 2026-11-03 14:33:00 | v0.1.8 release | CHANGELOG 0.1.8; ModuleVersion 0.1.8; SPA-013 | Cursor Agent [Tier 1: grok-4.7] | Cut the Pester pin as a patch release | Tag v0.1.8 after the version files match the changelog |
+| 2026-11-03 14:17:37 | SPA-013 Pester pin | Dual-host workflow and portable template pin Pester 6.1.0 | Cursor Agent [Tier 1: grok-4.7] | Stop CI from keeping an older preinstalled Pester or floating to a newer Gallery build | Workflow and template use -RequiredVersion 6.1.0; tests stay ./tests/unit |
+| 2026-10-16 15:24:00 | Release register sync | docs/issues.md names v0.1.7; SPA-012 backfilled on CHANGELOG 0.1.2 | Cursor Grok 4.7 [Tier 2: grok-4.7] | Keep the issue register aligned with tag v0.1.7 | Headings for v0.1.7 and SPA-012 |
 | 2026-09-05 16:31:31 | OSS-036 catch-up — AAI bootstrap | This file created from `templates/ai-assistance-log-template.md` | Cursor Agent [Tier 2, slug: unlogged] | Retroactive per-product AAI disclosure per `logging.mdc` § 4 — spine-automation had no AAI log yet at 2026-09-04 audit | Pending human review |
 | 2026-08-21 | 0.1.6 release (SPA-011) | Optional probe envelope `criteriaHash` + `Test-SpineProbeCriteriaBinding`; Pester 34/34 | Cursor Agent (see product CHANGELOG 0.1.6) | Evidence ≠ receipt separation for probes; OSS-023 mirror | User `accept` 2026-08-21 |
 

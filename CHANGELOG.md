@@ -12,7 +12,20 @@ the product is unpublished. Latest release is the first numbered section below.
 
 ## [Unreleased]
 
-_Nothing queued — latest release: **0.1.7**._
+_Nothing queued — latest release: **0.1.8**._
+
+## [0.1.8] — 2026-11-03
+
+### Changed
+
+- **Dual-host CI Pester pin (`SPA-013`)** — live workflow and
+  `templates/ps-dual-host-ci/` install and import Pester **6.1.0** with
+  `-RequiredVersion`. A floor-only `-MinimumVersion` could keep an older
+  preinstalled module or float to a newer Gallery build.
+- **`ModuleVersion`** — `Spine.Automation.psd1` set to `0.1.8` for this
+  release.
+- **VirusTotal file scan** — the release workflow file-scans the public tag
+  archive zip. That step was already on `main` and ships in this tag.
 
 ## [0.1.7] — 2026-10-12
 

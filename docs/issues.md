@@ -18,6 +18,12 @@ _(None.)_
 
 _(None.)_
 
+## Resolved issues (2026-11-03 — v0.1.8)
+
+| ID | Summary | Evidence |
+|----|---------|----------|
+| SPA-013 | Dual-host CI pins Pester 6.1.0 | `.github/workflows/dual-host-ps.yml`; `templates/ps-dual-host-ci/`; README Gallery line; `docs/consumption.md` dry-run |
+
 ## Resolved issues (2026-10-12 — v0.1.7)
 
 No new `SPA-` id. Shipped the assistance-log table fix, Actions
@@ -83,6 +89,8 @@ No new `SPA-` id. Shipped the assistance-log table fix, Actions
 ## Activity
 
 <!-- ISSUES-ACTIVITY+ -->
+- **2026-11-03 14:33:00** — Released `v0.1.8` (`SPA-013` Pester 6.1.0 pin; `ModuleVersion` 0.1.8).
+- **2026-11-03 14:17:37** — Resolved `SPA-013`: dual-host CI and the portable template pin Pester 6.1.0 (`-RequiredVersion`).
 - **2026-10-16 15:24:00** — Recorded `v0.1.7` (assistance-log table; Actions `@v7`; ModuleVersion `0.1.7`). Backfilled `SPA-012` for the `0.1.2` probe `-Json` and `-AgentSummary` behavior.
 - **2026-08-21 20:45:00** — Shipped `SPA-010` and `SPA-011` in `v0.1.6` (Pester-runner catalog + criteriaHash binding; ModuleVersion 0.1.6).
 - **2026-08-20 22:10:00** — Resolved `SPA-011` (optional `criteriaHash` / `contractId`; Pester 21/21).

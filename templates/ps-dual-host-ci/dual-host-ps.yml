@@ -30,19 +30,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Ensure Pester 5+
+      - name: Ensure pinned Pester
         run: |
-          $pester = Get-Module -ListAvailable -Name Pester |
-            Sort-Object Version -Descending |
+          # Exact pin. A floor-only -MinimumVersion can keep an older
+          # preinstalled module or float to a newer Gallery build.
+          $required = '6.1.0'
+          $match = Get-Module -ListAvailable -Name Pester |
+            Where-Object { $_.Version -eq [version]$required } |
             Select-Object -First 1
-          if (-not $pester -or $pester.Version -lt [version]'5.0.0') {
-            Install-Module -Name Pester -MinimumVersion 5.0.0 -Force `
+          if (-not $match) {
+            Install-Module -Name Pester -RequiredVersion $required -Force `
               -SkipPublisherCheck -Scope CurrentUser
           }
 
       - name: Run Pester
         run: |
-          Import-Module Pester -MinimumVersion 5.0.0
+          Import-Module Pester -RequiredVersion 6.1.0 -Force
           $cfg = New-PesterConfiguration
           # Customize: ./tests vs ./tests/unit
           $cfg.Run.Path = './tests'

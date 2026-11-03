@@ -20,7 +20,7 @@ Single entry: PS 5.1 smoke → Pester → product PSScriptAnalyzer.
 **Gallery deps** (CurrentUser; validate does not auto-install):
 
 ```powershell
-Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force -SkipPublisherCheck
+Install-Module Pester -RequiredVersion 6.1.0 -Scope CurrentUser -Force -SkipPublisherCheck
 Install-Module PSScriptAnalyzer -Scope CurrentUser -Force -SkipPublisherCheck
 ```
 

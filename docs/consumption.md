@@ -57,7 +57,7 @@ This repo ships [`.github/workflows/dual-host-ps.yml`](../.github/workflows/dual
 **Local dry-run** (same commands as CI, no GitHub required):
 
 ```powershell
-pwsh -NoProfile -Command "Import-Module Pester -MinimumVersion 5.0.0; Invoke-Pester -Path ./tests/unit -CI"
+pwsh -NoProfile -Command "Import-Module Pester -RequiredVersion 6.1.0; Invoke-Pester -Path ./tests/unit -CI"
 powershell.exe -NoProfile -File ./scripts/Invoke-SpinePs51SmokeTest.ps1
 ```
 
